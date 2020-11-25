@@ -159,3 +159,17 @@ console.log(arr)
 ```
 
 ## 8. Пробелы вокруг вложенного вызова
+
+Отделить пробелами аргументы функции, если ими является результат выполнения другой функции.
+
+✔ Хорошо:
+```
+const getFullName = (firstName, secondName) => `${firstName} ${secondName}`;
+
+console.log(== ==getFullName('John', 'Doe')== ==);
+```
+
+❌ Плохо:
+```
+console.log(getFullName('John', 'Doe'));
+```
