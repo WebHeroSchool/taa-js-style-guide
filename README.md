@@ -28,7 +28,7 @@ let vasya;
 ✔ Хорошо:
 ```
 let editableValue;
-const makeUser = () =>{
+const makeUser = () => {
   // do logic
 }
 ```
