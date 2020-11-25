@@ -166,7 +166,7 @@ console.log(arr)
 ```
 const getFullName = (firstName, secondName) => `${firstName} ${secondName}`;
 
-console.log( ==` `== getFullName('John', 'Doe') ==` `== );
+console.log(==&nbsp;==getFullName('John', 'Doe')==&nbsp;==);
 ```
 
 ❌ Плохо:
