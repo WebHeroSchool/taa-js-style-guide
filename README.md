@@ -173,3 +173,62 @@ console.log( getFullName('John', 'Doe') );
 ```
 console.log(getFullName('John', 'Doe'));
 ```
+
+## 9. Создание объекта через литерал, а не через конструктор
+
+✔ Хорошо:
+```
+const user = {
+  name: 'Anton',
+  isAdmin: false,
+}
+```
+
+❌ Плохо:
+```
+function User(name, isAdmin) {
+  this.name = name;
+  this.isAdmin = isAdmin;
+};
+
+const user = new User('Anton', false);
+```
+
+## 10. Именование классов в PascalCase нотации
+
+Имя класса начинается с заглавной буквы, если имя состоит из несколькох слов, то каждое последующее слово начинается с заглавной буквы, а пробелы исключаются.
+
+✔ Хорошо:
+```
+class User {
+  constructor(name, isAdmin = false) {
+    this.name = name;
+    this.isAdmin = isAdmin;
+  }
+  
+  displayInfo = () => {
+    console.log(this.name, this.isAdmin);
+  }
+}
+
+const user = new User('Anton');
+
+user.displayInfo();
+```
+
+❌ Плохо:
+```
+class car {
+  constructor(params) {
+    // constructor..
+  }
+  
+  method = () => {
+    // logic..
+  }
+}
+
+const car = new car(params);
+
+car.method();
+```
