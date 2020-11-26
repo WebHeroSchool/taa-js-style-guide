@@ -201,173 +201,168 @@ const car = new car(params);
 car.method();
 ```
 
+## 9. Завершите переключатели (switch) по умолчанию
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-9. Завершите переключатели (switch) по умолчанию
 Всегда завершайте операторы switch значением default. Даже если вы думаете, что в этом нет необходимости.
-10.Объявляйте переменные для for вне циклов
-11. Подключение скриптов в конце body
-12. При использовании конструкции if .. else располагайте else на одной строке со скобкой закрывающей блок if.
-13. Имена констант должны быть ЗАГЛАВНЫМИ_БУКВАМИ и через нижнее подчёркивание
-14. Одна функция для одной задачи.
-По возможности функция должна выполнять одну задачу, это облегчает дебаг и работу с вашим кодом другим разработчикам. Это также относится к вспомогательным функциям для общих задач. Если вы замечаете что делаете одно и тоже в нескольких функциях, лучше создать более универсальную вспомогательную функцию, и использовать ее где необходимо. Например, необходимо сделать вспомогательную функцию для создания ссылок:
-15. Использовать значения параметров по умолчанию.
-
-
-
-
-## 3. Условия, функции и кудрявые скобки
-
-Тело функции записывается между кудрявых скобок, при этом открывающая скобка пишется на той же строке, что и имя функции или условие, а закрывающая на новой строке.
 
 ✔ Хорошо:
 ```
-function funcName() {
-  // body of function
+switch (comand) {
+  case '/start':
+    start();
+    break;
+
+  case '/search':
+    search();
+    break;
+
+  case '/stop':
+    stop();
+    break;
+
+  default:
+    throw new Error('Unknown comand');
+}
+```
+
+❌ Плохо:
+```
+switch (comand) {
+  case '/start':
+    start();
+    break;
+
+  case '/stop':
+    stop();
+    break;
+}
+```
+
+## 10.Объявляйте переменные для for вне циклов
+
+При таком подходе уменьшается нагрузка на движек, а следовательно повышается производительность кода.
+
+✔ Хорошо:
+```
+const demo = document.querySelector('.demo');
+const list = document.createElement('ul');
+
+const create = (el, value) => {
+  const newEl = document.createElement(el);
+  newEl.innerHTML = value;
+
+  return newEl;
 }
 
+for (let i = 0; i < 10; i++) {
+  list.append( create('li', i) );
+}
+
+demo.innerHTML = list.innerHTML;
+```
+
+❌ Плохо:
+```
+const list = document.createElement('ul');
+const create = (el, value) => {
+  const newEl = document.createElement(el);
+  newEl.innerHTML = value;
+
+  return newEl;
+}
+
+for (let i = 0; i < 10; i++) {
+  const demo = document.querySelector('.demo');
+
+  list.append( create('li', i) );
+  demo.innerHTML = demo + list.innerHTML;
+}
+
+```
+
+## 11. Подключение скриптов в конце body
+
+Работая с DOM важно, что бы к моменту выполнения программы сам DOM был уже сформирован.
+
+✔ Хорошо:
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    // ...
+  </head>
+  <body>
+    // ...
+    <script src='./path/to/script.js'></script>
+  </body>
+</html>
+```
+
+❌ Плохо:
+```
+<head>
+  // ...
+  <script src='./path/to/script.js'></script>
+</head>
+```
+
+## 12. При использовании конструкции if .. else располагайте else на одной строке со скобкой закрывающей блок if.
+
+Если от else можно отказаться, то лучше так и сделать.
+
+✔ Хорошо:
+```
+// examp 1:
 if (true) {
-  // do logic
+  // do something..
+} else {
+  // do another..
 }
+
+// examp 2:
+if (true) {
+  // do something..
+} return result;
 ```
 
 ❌ Плохо:
 ```
-function funcName()
-{
-  // body of function
+if (true) {
+  // do something..
+} 
+else {
+  // do another..
 }
-
-if (true) { // do logic }
 ```
 
-## 4. Шаблонные строки
+## 13. Одна функция для одной задачи.
 
-При необходимости использования переноса строки или логического выражения внутри строки нужно использовать шаблонные строки.
+По возможности функция должна выполнять одну задачу, это облегчает дебаг и работу с вашим кодом другим разработчикам. Это также относится к вспомогательным функциям для общих задач. Если вы замечаете что делаете одно и тоже в нескольких функциях, лучше создать более универсальную вспомогательную функцию, и использовать ее где необходимо.
 
 ✔ Хорошо:
 ```
-const html = `
-  <h1>Header</h1>
-  <p>Subtitle</p>
-`;
+const searchElement = (search, into = document) => into.querySelector(search);
 
-const welcome = `Welcome to ${window.location.href}!`;
-```
+const searchLastElement = (search, into = document) => {
+  const el = into.querySelectorAll(search);
 
-❌ Плохо:
-```
-const welcome = 'Welcome to ' + window.location.href + '!';
-```
-
-## 5. Горизонтальные отступы
-
-2 пробела или табуляция настроенная на 2 пробела.
-
-✔ Хорошо:
-```
-function makeCycle() {
-  let value = 0;
-
-  for (let i; i <= 10; i++) {
-    // operations on value...
-  }
-
-  return value;
-}
-```
-
-❌ Плохо:
-```
-function makeCycle() {
-let value = 0;
-
-for (let i; i <= 10; i++) {
-// operations on value...
+  return el[el.length-1];
 }
 
-return value;
-}
+const searchElements = (search, into = document) => into.querySelectorAll(search);
+
+// ищем первый div в документе
+const div = searchElement('div');
+
+// ищем последний элемент списка в первом на странице списке
+const lastLi = searchLastElement('li', 'ul');
+
+// ищем все параграфы на 
+const paragraphs = searchElements('p');
 ```
 
-> Вопрос о табах и пробелах на мой взгляд спорный, так что это просто дань моде.
+## 14. Использовать значения параметров по умолчанию.
 
-## 6. Вертикальные отступы
+Упрощает написание кода, объем кода, а так же работает как дополнительная "Защита от дурака" :P 
 
-Логические блоки в функциях длжны быть отделены пустой строкой.
-
-✔ Хорошо:
-```
-function makeCycle() {
-  let value = 0;
-
-  for (let i; i <= 10; i++) {
-    // operations on value...
-  }
-
-  return value;
-}
-```
-
-❌ Плохо:
-```
-function makeCycle() {
-  let value = 0;
-  for (let i; i <= 10; i++) {
-    // operations on value...
-  }
-  return value;
-}
-```
-
-
-
-## 8. Пробелы вокруг вложенного вызова
-
-Отделить пробелами аргументы функции, если ими является результат выполнения другой функции.
-
-✔ Хорошо:
-```
-const getFullName = (firstName, secondName) => `${firstName} ${secondName}`;
-
-console.log( getFullName('John', 'Doe') );
-```
-
-❌ Плохо:
-```
-console.log(getFullName('John', 'Doe'));
-```
-
-## 9. Создание объекта через литерал, а не через конструктор
-
-✔ Хорошо:
-```
-const user = {
-  name: 'Anton',
-  isAdmin: false,
-}
-```
-
-❌ Плохо:
-```
-function User(name, isAdmin) {
-  this.name = name;
-  this.isAdmin = isAdmin;
-};
-
-const user = new User('Anton', false);
-```
-
-
+Примеры смотри в предыдущем пункте.
